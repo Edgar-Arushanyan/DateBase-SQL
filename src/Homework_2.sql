@@ -3,10 +3,11 @@
   1. Вывести название и стоимость в USD одного самого дорогого проданного товара */
 
 SELECT
-    ProductName,
-    Price AS Price_usd
-FROM Products
-ORDER BY Price DESC
+    Products.ProductName,
+    Products.Price * 1.1 AS Price_usd
+FROM OrderDetails
+JOIN Products ON OrderDetails.ProductID=Products.ProductID
+ORDER BY Products.Price DESC
     LIMIT 1
 
 /*----------------------------------------------------------------------------------
@@ -21,7 +22,7 @@ WHERE
 	Categories.CategoryName='Beverages'
     AND
     Suppliers.Country ='USA'
-ORDER BY Price DESC
+ORDER BY Products.Price DESC
 LIMIT 2
 
  /*-----------------------------------------------------------------------------------
@@ -36,8 +37,7 @@ WHERE
    4. Вывести список стран, которые поставляют морепродукты ---------------------------*/
 
 SELECT DISTINCT
-    Suppliers.Country,
-    Categories.CategoryName
+    Suppliers.Country
 FROM Products
          JOIN Suppliers  ON Products.ProductID=Products.ProductID
          JOIN Categories ON Products.CategoryID=Categories.CategoryID
